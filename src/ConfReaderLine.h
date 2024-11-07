@@ -56,7 +56,7 @@ public:
 		return false;
 	}
 
-	string getValue(int column)
+	string getValue(unsigned int column)
 	{
 		if (values.size() < column)
 			return "";
@@ -67,7 +67,7 @@ public:
 	/// <summary>
 	/// return : success
 	/// </summary>
-	bool setField(int column, string value)
+	bool setField(unsigned int column, string value)
 	{
 		if (values.size() <= column)
 		{
