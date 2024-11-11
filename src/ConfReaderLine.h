@@ -56,9 +56,14 @@ public:
 		return false;
 	}
 
+	int countValues()
+	{
+		return values.size();
+	}
+
 	string getValue(unsigned int column)
 	{
-		if (values.size() < column)
+		if (column >= countValues())
 			return "";
 
 		return values[column];
@@ -69,7 +74,7 @@ public:
 	/// </summary>
 	bool setField(unsigned int column, string value)
 	{
-		if (values.size() <= column)
+		if (column >= countValues())
 		{
 			//cout << "oob:values" << endl;
 			while (values.size() <= column)
