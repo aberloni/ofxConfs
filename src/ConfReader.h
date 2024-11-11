@@ -83,7 +83,7 @@ public:
 	}
 	*/
 
-	ConfReaderLine* get(int lineIndex)
+	ConfReaderLine* get(size_t lineIndex)
 	{
 		if (lines.size() <= lineIndex)
 		{

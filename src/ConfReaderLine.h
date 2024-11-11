@@ -56,7 +56,7 @@ public:
 		return false;
 	}
 
-	int countValues()
+	size_t countValues()
 	{
 		return values.size();
 	}
@@ -72,7 +72,7 @@ public:
 	/// <summary>
 	/// return : success
 	/// </summary>
-	bool setField(unsigned int column, string value)
+	bool setField(size_t column, string value)
 	{
 		if (column >= countValues())
 		{
