@@ -48,6 +48,11 @@ public:
 		setup(filepath, extension);
 	}
 
+	string getConfName()
+	{
+		return uid;
+	}
+
 	bool isFile(string uid)
 	{
 		return this->uid == uid;
@@ -58,30 +63,6 @@ public:
 		auto line = getset(puid);
 		line->setField(column, value);
 	}
-
-	/// <summary>
-	/// deprecated
-	/// </summary>
-	/*
-	void set(int line, int column, string value)
-	{
-		if (lines.size() <= line)
-		{
-			cout << "oob:reader" << endl;
-
-			while (lines.size() <= line)
-			{
-				lines.push_back(new ConfReaderLine(""));
-			}
-		}
-
-
-		//cout << "set:" << column << ":" << value << endl;
-		//cout << "line:" << line << " x" << lines.size() << endl;
-
-		lines[line]->setField(column, value);
-	}
-	*/
 
 	ConfReaderLine* get(size_t lineIndex)
 	{
@@ -94,6 +75,20 @@ public:
 		}
 
 		return lines[lineIndex];
+	}
+
+	/// <summary>
+	/// return first line with specific value in column
+	/// from all possible lines
+	/// </summary>
+	ConfReaderLine* getLineByValue(size_t column, string value)
+	{
+		for (auto l : lines)
+		{
+			if (l->getValue(column) == value)
+				return l;
+		}
+		return nullptr;
 	}
 
 	/// <summary>
