@@ -8,14 +8,17 @@
 /// </summary>
 class ConfReaderLine
 {
-	string property;
-	vector<string> values;
+	string property;		// line header separated by '='
+	vector<string> values;	// all values separated by ';'
+
+	string separator_header = "=";
+	string separator_values = ";";
 
 public:
 
 	ConfReaderLine(string raw)
 	{
-		auto split = ofSplitString(raw, "=");
+		auto split = ofSplitString(raw, separator_header);
 		if (split.size() == 1)
 		{
 			property = raw;
@@ -25,7 +28,7 @@ public:
 		property = split[0];
 
 		raw = split[1];
-		split = ofSplitString(raw, ";");
+		split = ofSplitString(raw, separator_values);
 		for (auto s : split)
 		{
 			values.push_back(s);
@@ -46,11 +49,14 @@ public:
 		return property == prop;
 	}
 
-	bool hasValue(string field)
+	/// <summary>
+	/// is given field
+	/// </summary>
+	bool hasValue(string val)
 	{
 		for (auto v : values)
 		{
-			if (v == field)
+			if (v == val)
 				return true;
 		}
 		return false;
@@ -61,10 +67,27 @@ public:
 		return values.size();
 	}
 
-	string getValue(unsigned int column)
+	/// <summary>
+	/// default : string
+	/// </summary>
+	string getValue(size_t column)
 	{
-		if (column >= countValues())
-			return "";
+		return getString(column);
+	}
+
+	int getInt(size_t column)
+	{
+		return ofToInt(getString(column));
+	}
+
+	float getFloat(size_t column)
+	{
+		return ofToFloat(getString(column));
+	}
+
+	string getString(size_t column)
+	{
+		if(column < 0 || column >= countValues()) return ""; // oob => empty
 
 		return values[column];
 	}
@@ -74,6 +97,7 @@ public:
 	/// </summary>
 	bool setField(size_t column, string value)
 	{
+		// make empty missing fields
 		if (column >= countValues())
 		{
 			//cout << "oob:values" << endl;
@@ -83,7 +107,7 @@ public:
 			}
 		}
 
-		cout << "set:field:" << property << " #" << column << " = " << value << endl;
+		//cout << "set:field:" << property << " #" << column << " = " << value << endl;
 
 		values[column] = value;
 
