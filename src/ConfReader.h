@@ -108,7 +108,7 @@ public:
 			return false;
 		}
 
-		return ofToFloat(value->getValue(0)) > 0;
+		return ofToFloat(value->getValue(0)) > 0.0f;
 	}
 
 	ConfReaderLine* get(string uid)
