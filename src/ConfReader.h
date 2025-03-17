@@ -53,6 +53,11 @@ public:
 		return uid;
 	}
 
+	size_t count()
+	{
+		return lines.size();
+	}
+
 	bool isFile(string uid)
 	{
 		return this->uid == uid;
@@ -62,19 +67,6 @@ public:
 	{
 		auto line = getset(puid);
 		line->setField(column, value);
-	}
-
-	ConfReaderLine* get(size_t lineIndex)
-	{
-		if (lines.size() <= lineIndex)
-		{
-			while (lines.size() <= lineIndex)
-			{
-				lines.push_back(new ConfReaderLine(""));
-			}
-		}
-
-		return lines[lineIndex];
 	}
 
 	/// <summary>
@@ -96,14 +88,35 @@ public:
 	/// </summary>
 	bool isFieldActive(string field)
 	{
-		auto value = get(field);
-
-		if (value == nullptr)
-		{
+		// invalid param
+		if (field.length() <= 0)
 			return false;
+
+		// no field of that name
+		auto value = get(field);
+		if (value == nullptr) 
+			return false;
+
+		// empty first value for that field
+		string str = value->getValue(0);
+		if (str.length() <= 0)
+			return false;
+
+		// is value other that 0
+		return ofToFloat(str) > 0.0f;
+	}
+
+	ConfReaderLine* get(size_t lineIndex)
+	{
+		if (lines.size() <= lineIndex)
+		{
+			while (lines.size() <= lineIndex)
+			{
+				lines.push_back(new ConfReaderLine(""));
+			}
 		}
 
-		return ofToFloat(value->getValue(0)) > 0.0f;
+		return lines[lineIndex];
 	}
 
 	ConfReaderLine* get(string uid)

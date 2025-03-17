@@ -39,6 +39,11 @@ public:
 
 	}
 
+	string getHeader()
+	{
+		return property;
+	}
+
 	bool hasValues()
 	{
 		return values.size() > 0;
@@ -85,10 +90,12 @@ public:
 		return ofToFloat(getString(column));
 	}
 
+	/// <summary>
+	/// returns empty if not present (out of bounds)
+	/// </summary>
 	string getString(size_t column)
 	{
 		if(column < 0 || column >= countValues()) return ""; // oob => empty
-
 		return values[column];
 	}
 
