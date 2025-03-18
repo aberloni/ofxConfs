@@ -80,7 +80,7 @@ public:
 		return getString(column);
 	}
 
-	int getInt(size_t column)
+	size_t getInt(size_t column)
 	{
 		return ofToInt(getString(column));
 	}

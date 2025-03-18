@@ -70,6 +70,30 @@ public:
 	}
 
 	/// <summary>
+	/// return a line matching header and value in first column
+	/// </summary>
+	ConfReaderLine* getLineByHeader(string header, string firstValue)
+	{
+		if (header.length() <= 0)
+		{
+			cout << "no header given ?" << endl;
+			return nullptr;
+		}
+
+		for (auto l : lines)
+		{
+			if (l->getHeader() == header)
+			{
+				if (l->getValue(0) == firstValue)
+				{
+					return l;
+				}
+			}
+		}
+		return nullptr;
+	}
+
+	/// <summary>
 	/// return first line with specific value in column
 	/// from all possible lines
 	/// </summary>
@@ -158,7 +182,7 @@ public:
 	/// <summary>
 	/// returns ALL lines with property
 	/// </summary>
-	vector<ConfReaderLine*> filter(string fieldValue)
+	vector<ConfReaderLine*> filterAll(string fieldValue)
 	{
 		vector<ConfReaderLine*> ret;
 
