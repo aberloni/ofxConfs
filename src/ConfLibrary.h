@@ -29,6 +29,7 @@ private:
 
 	/// <summary>
 	/// return : reader of given UID
+	/// add it to local buff
 	/// </summary>
 	ConfReader* fetch(string uid)
 	{
@@ -50,35 +51,11 @@ public:
 
 	/// <summary>
 	/// return reader of given UID
+	/// a file .conf within data/ folder
 	/// </summary>
 	static ConfReader* get(std::string uid)
 	{
 		return getInstance().fetch(uid);
-	}
-
-	static ConfReaderLine* getPalm(string ouid, string iuid)
-	{
-		auto conf = ConfLibrary::getOceanConf(ouid);
-		auto isls = conf->filterAll("isl");
-		auto pals = conf->filterAll("pal");
-
-		for (auto isl : isls)
-		{
-			for (auto pal : pals)
-			{
-				if (pal->getHeader() == isl->getHeader())
-				{
-					return pal;
-				}
-			}
-		}
-
-		return nullptr;
-	}
-
-	static ConfReader* getOceanConf(std::string ouid)
-	{
-		return get(ouid + "/ocean");
 	}
 
 };
