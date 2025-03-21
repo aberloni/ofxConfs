@@ -91,6 +91,14 @@ public:
 	}
 
 	/// <summary>
+	/// bool field are (int) 0/1
+	/// </summary>
+	bool getBool(size_t column)
+	{
+		return getInt(column) > 0;
+	}
+
+	/// <summary>
 	/// returns empty if not present (out of bounds)
 	/// </summary>
 	string getString(size_t column)

@@ -10,18 +10,6 @@
 /// </summary>
 class ConfLibrary
 {
-public:
-
-
-
-	static ConfLibrary& getInstance()
-	{
-		static ConfLibrary instance;
-		return instance;
-	}
-
-private:
-	
 	static ConfLibrary* instance;
 	vector<ConfReader*> confs;
 
@@ -45,6 +33,12 @@ private:
 	}
 
 public:
+
+	static ConfLibrary& getInstance()
+	{
+		static ConfLibrary instance;
+		return instance;
+	}
 	
 	ConfLibrary(ConfLibrary const&)			= delete;
 	void operator=(ConfLibrary const&)		= delete;
@@ -56,6 +50,44 @@ public:
 	static ConfReader* get(std::string uid)
 	{
 		return getInstance().fetch(uid);
+	}
+
+	static bool hasField(string file, string field)
+	{
+		return getBool(file, field);
+	}
+
+	/// <summary>
+	/// missing : returns false
+	/// non numeric value eval presence of value
+	/// </summary>
+	static bool getBool(string file, string field)
+	{
+		auto conf = ConfLibrary::get(file);
+		if (conf == nullptr) return false;
+
+		auto line = conf->get(field);
+		if (line == nullptr) return false;
+
+		return conf->isFieldActive(field);
+	}
+
+	/// <summary>
+	/// missing : 0f
+	/// </summary>
+	static float getFloat(string file, string field, int column = -1)
+	{
+		auto conf = ConfLibrary::get(file);
+		if (conf == nullptr) return 0;
+
+		auto line = conf->get(field);
+		if (line == nullptr) return 0;
+
+		if (column < 0) column = 0;
+
+		if (line->countValues() >= column) return 0;
+		
+		return ofToFloat(line->getValue(column));
 	}
 
 };

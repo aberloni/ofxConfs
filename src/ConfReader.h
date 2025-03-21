@@ -1,6 +1,8 @@
 #pragma once
 
 #include "ConfReaderLine.h"
+#include <cctype>
+#include <iostream>
 
 class ConfReader
 {
@@ -108,7 +110,8 @@ public:
 	}
 
 	/// <summary>
-	/// check is field is present and active ( = 1 )
+	/// check is field has any value
+	/// and value is NOT 0
 	/// </summary>
 	bool isFieldActive(string field)
 	{
@@ -126,8 +129,14 @@ public:
 		if (str.length() <= 0)
 			return false;
 
-		// is value other that 0
-		return ofToFloat(str) > 0.0f;
+		if (isNumber(str))
+		{
+			// is value other that 0 ?
+			return ofToFloat(str) > 0.0f;
+		}
+		
+		// some value (not a number)
+		return true;
 	}
 
 	ConfReaderLine* get(size_t lineIndex)
@@ -246,6 +255,17 @@ public:
 		if (verbose)	cout << "conf:save @ " << dataPath << endl;
 
 		file.close();
+	}
+
+private:
+
+	bool isNumber(const std::string& str) {
+		for (char c : str) {
+			if (!std::isdigit(c)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 };
