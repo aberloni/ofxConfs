@@ -1,6 +1,15 @@
 
 # ofxConfs
 
+managing a config file that use field=value pattern
+
+# syntaxe
+
+	[field]=[value0];[value1]
+
+- lines starting with the char # are ignored
+- empty lines are ignored
+
 # how to use
 
 test.conf
