@@ -55,7 +55,7 @@ public:
 	}
 
 	/// <summary>
-	/// is given field
+	/// this conf line has given value ?
 	/// </summary>
 	bool hasValue(string val)
 	{
@@ -67,6 +67,10 @@ public:
 		return false;
 	}
 
+	/// <summary>
+	/// count values separated by ;
+	/// not including property
+	/// </summary>
 	size_t countValues()
 	{
 		return values.size();

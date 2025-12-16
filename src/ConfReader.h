@@ -162,7 +162,7 @@ public:
 			}
 		}
 
-		cout << dataPath << " has no #" << uid << endl;
+		//cout << dataPath << " has no line property #" << uid << endl;
 
 		return nullptr;
 	}
