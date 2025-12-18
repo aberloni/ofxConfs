@@ -75,7 +75,7 @@ public:
 	/// <summary>
 	/// missing : 0f
 	/// </summary>
-	static float getFloat(string file, string field, int column = -1)
+	static float getFloat(string file, string field, size_t column = -1)
 	{
 		auto conf = ConfLibrary::get(file);
 		if (conf == nullptr) return 0;
