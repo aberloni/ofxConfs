@@ -181,6 +181,21 @@ public:
 	}
 
 	/// <summary>
+	/// drop a line (written out on next save)
+	/// the pointer is freed : nobody must keep it
+	/// returns false if the line is not part of this file
+	/// </summary>
+	bool remove(ConfReaderLine* line)
+	{
+		auto it = std::find(lines.begin(), lines.end(), line);
+		if (it == lines.end()) return false;
+
+		lines.erase(it);
+		delete line;
+		return true;
+	}
+
+	/// <summary>
 	/// will fetch and create if null
 	/// </summary>
 	ConfReaderLine* getset(string uid)
@@ -219,11 +234,16 @@ public:
 
 		for (auto line : raw.getLines())
 		{
+			// comments : everything from '#' to end of line is ignored
+			// (a line starting with '#' becomes empty)
+			auto hash = line.find('#');
+			if (hash != string::npos)
+			{
+				line = ofTrimBack(line.substr(0, hash)); // drop spaces before the '#'
+			}
+
 			// empties
 			if (line.length() <= 0) continue;
-
-			// skip comments
-			if (line[0] == '#') continue;
 
 			//cout << "	+line : " << line << endl;
 

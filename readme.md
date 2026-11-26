@@ -8,7 +8,15 @@ managing a config file that use field=value pattern
 	[field]=[value0];[value1]
 
 - lines starting with the char # are ignored
+- any character after a # in a line is ignored (spaces before the # too)
 - empty lines are ignored
+- comments are not kept : `save()` writes the file back without them
+- a value can't contain a # (it would start a comment)
+
+example
+
+	#comment
+	property=value;value #comment
 
 # how to use
 
