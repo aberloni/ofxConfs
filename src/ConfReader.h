@@ -18,6 +18,8 @@ class ConfReader
 
 	void setup(string path, string ext)
 	{
+		uid = path; // ConfLibrary::fetch matches on it (isFile) : one shared reader per file
+
 		dataPath = ofToDataPath(path + "." + ext);
 
 		file = ofFile(dataPath);
