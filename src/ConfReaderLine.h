@@ -133,6 +133,14 @@ public:
 		return true;
 	}
 
+	/// <summary>
+	/// keep only the first count values (drops the others)
+	/// </summary>
+	void truncate(size_t count)
+	{
+		if (values.size() > count) values.resize(count);
+	}
+
 	string stringify()
 	{
 		string ret = property + "=";
